@@ -50,8 +50,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\background.png" />
+    <Content Include="Content\menuMusic.wav" />
     <Content Include="Content\playButton.png" />
+    <Content Include="Content\playButton1.png" />
+    <Content Include="Content\playingMusic.wav" />
     <Content Include="Content\quitButton.png" />
+    <Content Include="Content\quitButton1.png" />
     <Content Include="Content\title.png" />
     <Content Include="Icon.ico" />
   </ItemGroup>

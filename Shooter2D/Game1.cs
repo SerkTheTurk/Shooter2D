@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Media;
 
 namespace Shooter2D
 {
@@ -18,7 +20,28 @@ namespace Shooter2D
         Texture2D playBtn;
         Texture2D quitBtn;
 
+        Texture2D playButton;
+        Texture2D quitButton;
+        Rectangle playRect;
+        Rectangle quitRect;
+
         GameState gameState;
+
+        SoundEffect mMusic;
+        SoundEffectInstance menuMusic;
+        SoundEffect pMusic;
+        SoundEffectInstance playingMusic;
+
+        Texture2D quitBtn1;
+        Texture2D playBtn1;
+
+        MouseState mouse;
+        Vector2 mousePosition;
+
+        Texture2D bg;
+
+        float speed = 0.05f;
+        float volume = 0.4f;
 
         public Game1()
         {
@@ -45,7 +68,23 @@ namespace Shooter2D
             title = Content.Load<Texture2D>("title");
             playBtn = Content.Load<Texture2D>("playButton");
             quitBtn = Content.Load<Texture2D>("quitButton");
-            
+
+            playRect = new Rectangle(335, 150, 250, 50);
+            quitRect = new Rectangle(335, 250, 250, 50);
+
+            mMusic = Content.Load<SoundEffect>("menuMusic");
+            menuMusic = mMusic.CreateInstance();
+            menuMusic.IsLooped = true;
+            pMusic = Content.Load<SoundEffect>("playingMusic");
+            playingMusic = pMusic.CreateInstance();
+            playingMusic.IsLooped = true;
+            menuMusic.Volume = volume;
+            playingMusic.Volume = volume;
+
+            quitBtn1 = Content.Load<Texture2D>("quitButton1");
+            playBtn1 = Content.Load<Texture2D>("playButton1");
+
+            bg = Content.Load<Texture2D>("background");
         }
 
         protected override void UnloadContent()
@@ -58,7 +97,49 @@ namespace Shooter2D
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            
+            mouse = Mouse.GetState();
+            mousePosition = new Vector2(mouse.X, mouse.Y);
+
+            switch (gameState)
+            {
+                case GameState.MENU:
+                    {
+                        menuMusic.Play();
+
+                        if (playRect.Contains(mousePosition))
+                        {
+                            playButton = playBtn1;
+                            if (mouse.LeftButton == ButtonState.Pressed)
+                            {
+                                menuMusic.Stop();
+                                gameState = GameState.PLAYING;
+                            }
+                        }
+                        else
+                        {
+                            playButton = playBtn;
+                        }
+                        if (quitRect.Contains(mousePosition))
+                        {
+                            quitButton = quitBtn1;
+                            if (mouse.LeftButton == ButtonState.Pressed)
+                            {
+                                Exit();
+                            }
+                        }
+                        else
+                        {
+                            quitButton = quitBtn;
+                        }
+
+                        break;
+                    }
+                case GameState.PLAYING:
+                    {
+                        playingMusic.Play();
+                        break;
+                    }
+            }
 
             base.Update(gameTime);
         }
@@ -73,15 +154,15 @@ namespace Shooter2D
                     {
                         spriteBatch.Begin();
                         spriteBatch.Draw(title, Vector2.Zero, Color.White);
-                        spriteBatch.Draw(playBtn, new Vector2(355, 150), Color.White);
-                        spriteBatch.Draw(quitBtn, new Vector2(355, 250), Color.White);
+                        spriteBatch.Draw(playButton, new Vector2(355, 150), Color.White);
+                        spriteBatch.Draw(quitButton, new Vector2(355, 250), Color.White);
                         spriteBatch.End();
                         break;
                     }
                 case GameState.PLAYING:
                     {
                         spriteBatch.Begin();
-
+                        spriteBatch.Draw(bg, Vector2.Zero, Color.White);
                         spriteBatch.End();
                         break;
                     }
