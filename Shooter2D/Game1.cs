@@ -40,7 +40,8 @@ namespace Shooter2D
 
         Texture2D bg;
 
-        float speed = 0.05f;
+        Player p = new Player();
+
         float volume = 0.4f;
 
         public Game1()
@@ -62,6 +63,7 @@ namespace Shooter2D
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            p.LoadContent(Content);
 
             gameState = GameState.MENU;
 
@@ -137,6 +139,7 @@ namespace Shooter2D
                 case GameState.PLAYING:
                     {
                         playingMusic.Play();
+                        p.Update(gameTime);
                         break;
                     }
             }
@@ -163,6 +166,7 @@ namespace Shooter2D
                     {
                         spriteBatch.Begin();
                         spriteBatch.Draw(bg, Vector2.Zero, Color.White);
+                        p.Draw(spriteBatch);
                         spriteBatch.End();
                         break;
                     }
