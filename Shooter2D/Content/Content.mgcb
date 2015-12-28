@@ -46,18 +46,6 @@
 /processorParam:TextureFormat=Color
 /build:quitButton.png
 
-#begin menuMusic.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:menuMusic.wav
-
-#begin playingMusic.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:playingMusic.wav
-
 #begin playButton1.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -101,4 +89,10 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:TextureFormat=Color
 /build:heli.png
+
+#begin music.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:music.wav
 

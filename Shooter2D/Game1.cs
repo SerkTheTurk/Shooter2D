@@ -27,10 +27,8 @@ namespace Shooter2D
 
         GameState gameState;
 
-        SoundEffect mMusic;
-        SoundEffectInstance menuMusic;
-        SoundEffect pMusic;
-        SoundEffectInstance playingMusic;
+        SoundEffect music;
+        SoundEffectInstance sMusic;
 
         Texture2D quitBtn1;
         Texture2D playBtn1;
@@ -41,8 +39,6 @@ namespace Shooter2D
         Texture2D bg;
 
         Player p = new Player();
-
-        float volume = 0.4f;
 
         public Game1()
         {
@@ -74,14 +70,9 @@ namespace Shooter2D
             playRect = new Rectangle(335, 150, 250, 50);
             quitRect = new Rectangle(335, 250, 250, 50);
 
-            mMusic = Content.Load<SoundEffect>("menuMusic");
-            menuMusic = mMusic.CreateInstance();
-            menuMusic.IsLooped = true;
-            pMusic = Content.Load<SoundEffect>("playingMusic");
-            playingMusic = pMusic.CreateInstance();
-            playingMusic.IsLooped = true;
-            menuMusic.Volume = volume;
-            playingMusic.Volume = volume;
+            music = Content.Load<SoundEffect>("music");
+            sMusic = music.CreateInstance();
+            sMusic.IsLooped = true;
 
             quitBtn1 = Content.Load<Texture2D>("quitButton1");
             playBtn1 = Content.Load<Texture2D>("playButton1");
@@ -106,14 +97,13 @@ namespace Shooter2D
             {
                 case GameState.MENU:
                     {
-                        menuMusic.Play();
+                        sMusic.Play();
 
                         if (playRect.Contains(mousePosition))
                         {
                             playButton = playBtn1;
                             if (mouse.LeftButton == ButtonState.Pressed)
                             {
-                                menuMusic.Stop();
                                 gameState = GameState.PLAYING;
                             }
                         }
@@ -138,7 +128,6 @@ namespace Shooter2D
                     }
                 case GameState.PLAYING:
                     {
-                        playingMusic.Play();
                         p.Update(gameTime);
                         break;
                     }
